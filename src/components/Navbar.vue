@@ -56,7 +56,7 @@ const toggleMenu = () => {
 
     <div
       v-if="isOpen"
-      class="fixed inset-0 flex mt-10 lg:hidden flex-col justify-center items-center bg-white/95 space-y-4 px-4"
+      class="fixed inset-0 flex mt-10 lg:hidden flex-col justify-center items-center bg-white/90 space-y-4 px-4"
     >
       <!-- Search Area  -->
       <div
