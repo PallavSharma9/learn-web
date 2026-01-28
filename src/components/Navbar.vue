@@ -44,7 +44,11 @@ const toggleMenu = () => {
       </div>
 
       <!-- Mobile view  -->
-      <div class="text-2xl lg:hidden cursor-pointer" @click="toggleMenu">
+      <div
+        :class="[isOpen ? 'fixed right-4' : '']"
+        class="right-4 z-50 text-2xl lg:hidden cursor-pointer"
+        @click="toggleMenu"
+      >
         <i v-if="!isOpen" class="fa-solid fa-bars"></i>
         <i v-else class="fa-solid fa-x"></i>
       </div>
@@ -52,7 +56,7 @@ const toggleMenu = () => {
 
     <div
       v-if="isOpen"
-      class="flex mt-10 lg:hidden flex-col justify-center items-center bg-white/95 space-y-4 px-4"
+      class="fixed inset-0 flex mt-10 lg:hidden flex-col justify-center items-center bg-white/95 space-y-4 px-4"
     >
       <!-- Search Area  -->
       <div
