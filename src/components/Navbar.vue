@@ -44,7 +44,7 @@ const toggleMenu = () => {
       </div>
 
       <!-- Mobile view  -->
-      <div class="text-2xl lg:hidden" @click="toggleMenu">
+      <div class="text-2xl lg:hidden cursor-pointer" @click="toggleMenu">
         <i v-if="!isOpen" class="fa-solid fa-bars"></i>
         <i v-else class="fa-solid fa-x"></i>
       </div>
