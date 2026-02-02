@@ -51,7 +51,7 @@ const cards = [
       :slides-per-view="1"
       :space-between="24"
       :centered-slides="false"
-      :initial-slide="2"
+      loop
       navigation
       :breakpoints="{
         768: { slidesPerView: 2 },
