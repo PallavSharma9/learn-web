@@ -12,7 +12,7 @@ const imageGallery = [
 </script>
 
 <template>
-  <div class="lg:px-20 pt-12">
+  <div class="lg:px-20 py-12">
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
       <div
         class="col-span-full bg-linear-to-r from-blue-950 to-blue-800 rounded-2xl px-6 pt-12 lg:px-20 flex flex-col justify-center items-center lg:flex-row lg:justify-between gap-20 lg:gap-0 text-white"

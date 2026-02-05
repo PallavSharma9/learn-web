@@ -5,6 +5,8 @@ import Achievement from "./components/Achievement.vue";
 import Reason from "./components/Reason.vue";
 import Courses from "./components/Courses.vue";
 import Gallary from "./components/Gallary.vue";
+import Faq from "./components/Faq.vue";
+import Contact from "./components/Contact.vue";
 </script>
 
 <template>
@@ -14,6 +16,8 @@ import Gallary from "./components/Gallary.vue";
   <Reason />
   <Courses />
   <Gallary />
+  <Faq />
+  <Contact />
 </template>
 
 <style scoped></style>
