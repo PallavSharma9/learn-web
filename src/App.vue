@@ -7,6 +7,7 @@ import Courses from "./components/Courses.vue";
 import Gallary from "./components/Gallary.vue";
 import Faq from "./components/Faq.vue";
 import Contact from "./components/Contact.vue";
+import Footer from "./components/Footer.vue";
 </script>
 
 <template>
@@ -18,6 +19,7 @@ import Contact from "./components/Contact.vue";
   <Gallary />
   <Faq />
   <Contact />
+  <Footer />
 </template>
 
 <style scoped></style>
