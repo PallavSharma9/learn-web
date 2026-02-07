@@ -11,7 +11,10 @@ const toggleMenu = () => {
       class="p-4 bg-white flex justify-between h-16 items-center lg:px-24 border border-zinc-300"
     >
       <div class="flex justify-start items-center">
-        <img class="w-32 lg:mr-8" src="../images/logo.png" alt="" />
+        <RouterLink to="/">
+          <img class="w-32 lg:mr-8" src="../images/logo.png" alt="" />
+        </RouterLink>
+
         <div class="hidden space-x-8 lg:flex font-medium text-zinc-700">
           <RouterLink class="hover:text-orange-700" to="/">Home</RouterLink>
           <RouterLink class="hover:text-orange-700" to="/courses"
@@ -56,7 +59,7 @@ const toggleMenu = () => {
 
     <div
       v-if="isOpen"
-      class="fixed inset-0 flex mt-10 lg:hidden flex-col justify-center items-center bg-white/90 space-y-4 px-4"
+      class="fixed inset-0 flex mt-10 lg:hidden flex-col justify-center items-center bg-white/95 space-y-4 px-4"
     >
       <!-- Search Area  -->
       <div

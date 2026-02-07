@@ -1,44 +1,5 @@
 <script lang="ts" setup>
-import courseImage from "@/images/course-image.png";
-const Courses = [
-  {
-    picture: courseImage,
-    title: "Learn-Web Combined Bootcamp",
-    description:
-      "Web dev (Every Friday) Devops (Every Friday) Machine Learning and AI (Every Saturday) Web3 (Every Sunday)",
-    price: "$160",
-    discount: "34",
-  },
-  {
-    picture: courseImage,
-    title: "Web Dev + Devops Bootcamp",
-    description: "Web dev Devops",
-    price: "$160",
-    discount: "34",
-  },
-  {
-    picture: courseImage,
-    title: "Web3 Bootcamp",
-    description: "Complete Solana and Web3 Bootcamp",
-    price: "$160",
-    discount: "34",
-  },
-  {
-    picture: courseImage,
-    title: "AI and ML Bootcamp",
-    description: "AI and ML Syllabus",
-    price: "$160",
-    discount: "34",
-  },
-  {
-    picture: courseImage,
-    title: "Learn-Web Combined Bootcamp",
-    description:
-      "Web dev (Every Friday) Devops (Every Friday) Machine Learning and AI (Every Saturday) Web3 (Every Sunday)",
-    price: "$160",
-    discount: "34",
-  },
-];
+import { courses } from "@/data/courses";
 </script>
 
 <template>
@@ -51,7 +12,8 @@ const Courses = [
     <div class="flex flex-column md:flex-row justify-center gap-4 flex-wrap">
       <!-- course card  -->
       <div
-        v-for="course in Courses"
+        v-for="course in courses"
+        :key="course.id"
         class="container p-4 bg-white rounded-2xl max-w-100"
       >
         <img class="rounded-xl" :src="course.picture" alt="" />
@@ -70,7 +32,7 @@ const Courses = [
           </div>
         </div>
         <RouterLink
-          to="/"
+          :to="`/courses/${course.id}`"
           class="block text-center py-2 bg-black text-white font-medium rounded-xl"
           >View Details</RouterLink
         >

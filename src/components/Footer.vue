@@ -38,5 +38,10 @@
         </div>
       </div>
     </div>
+    <h1
+      class="max-w-7xl mx-auto pb-12 text-center font-black leading-none text-transparent bg-clip-text bg-linear-to-b from-[#8c8c8c] via-[#2b2b2b] to-[#010101] opacity-90 text-6xl sm:text-[12rem] md:text-[14rem] -z-1"
+    >
+      Learn-Web
+    </h1>
   </div>
 </template>

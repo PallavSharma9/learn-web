@@ -26,7 +26,9 @@
           class="px-3 py-2 rounded-lg border border-zinc-400 hover:bg-zinc-200"
           >Learn More</RouterLink
         >
-        <RouterLink to="/" class="px-3 py-2 bg-black text-white rounded-lg"
+        <RouterLink
+          to="/courses"
+          class="px-3 py-2 bg-black text-white rounded-lg"
           >Explore Courses</RouterLink
         >
       </div>
