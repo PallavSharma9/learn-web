@@ -21,14 +21,14 @@ import { courses } from "@/data/courses";
           {{ course.title }}
         </h3>
         <p class="text-zinc-600 mb-6">
-          {{ course.description }}
+          {{ course.heroDescription }}
         </p>
         <div class="flex justify-between mb-10">
           <h2 class="text-3xl font-bold">
-            $139 <span class="text-zinc-400">{{ course.price }} </span>
+            $139 <span class="text-zinc-400">${{ course.price }} </span>
           </h2>
           <div class="rounded-full bg-green-100 text-green-600 px-3 py-2">
-            34% off
+            {{ course.discount }}% off
           </div>
         </div>
         <RouterLink

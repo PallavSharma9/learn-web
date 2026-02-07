@@ -1,67 +1,123 @@
 <script setup lang="ts">
+import type { Course } from "@/types/course";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 import { courses } from "@/data/courses";
+import { ref } from "vue";
 
 const route = useRoute();
 
-const course = computed(() =>
+const course = computed<Course | undefined>(() =>
   courses.find((c) => c.id === Number(route.params.id)),
 );
+console.log(course.value?.title);
+const showFull = ref(false);
+
+function toggleShowFull(): void {
+  showFull.value = !showFull.value;
+}
 </script>
 
 <template>
-  <section>
+  <section v-if="course">
     <div
-      class="px-6 py-10 lg:px-24 bg-pink-100 flex flex-col lg:flex-row gap-12 lg:gap-24"
+      class="px-6 py-10 lg:px-24 bg-pink-100 flex flex-col lg:flex-row-reverse gap-12 lg:gap-24"
     >
       <div class="container flex flex-col gap-2 bg-black rounded-2xl lg:w-1/3">
-        <img class="rounded-t-2xl" src="../images/course-image.png" alt="" />
+        <img class="rounded-t-2xl" :src="course.picture" alt="" />
         <div class="flex items-center gap-2 pl-4 pb-2">
           <img
             class="w-12 h-12 rounded-full border-2 border-white"
-            src="../images//heroImage.png"
+            :src="course.instructor.avatar"
             alt=""
           />
           <div class="flex flex-col">
-            <span class="font-semibold text-white">Pallav Sharma</span>
-            <span class="text-sm text-white/80"
-              >Senior Engineer &amp; Mentor</span
-            >
+            <span class="font-semibold text-white">{{
+              course.instructor.avatar
+            }}</span>
+            <span class="text-sm text-white/80">{{
+              course.instructor.avatar
+            }}</span>
           </div>
         </div>
       </div>
 
       <div class="flex flex-col gap-4 lg:gap-8 lg:w-1/2">
         <h2 class="text-2xl font-semibold md:text-4xl lg:text-5xl">
-          Learn-Web Combined Bootcamp
+          {{ course.title }}
         </h2>
         <p class="text-black/80 md:text-lg lg:text-xl">
-          Master real-world engineering skills from zero to production. Build
-          scalable web apps, deploy on cloud infrastructure, and create
-          blockchain applications with hands-on mentorship.
+          {{ course.description }}
         </p>
         <div class="flex flex-wrap gap-2 font-medium">
           <div
+            v-for="tag in course.tags"
             class="px-4 py-2 bg-white text-black capitalize rounded-full tracking-tight"
           >
-            Web3 Fundamentals
+            {{ tag }}
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="lg:relative flex flex-col lg:flex-row-reverse justify-center items-center lg:items-start gap-10 lg:gap-20 bg-zinc-100 px-4 lg:px-30 py-12"
+    >
+      <div class="lg:sticky lg:top-10 container p-4 bg-white rounded-2xl">
+        <img class="rounded-xl mx-auto max-h-70" :src="course.picture" alt="" />
+        <h3 class="my-4 text-2xl font-medium">
+          {{ course.title }}
+        </h3>
+        <div class="flex justify-between mb-10">
+          <h2 class="text-3xl font-bold">
+            $139 <span class="text-zinc-400">{{ course.price }} </span>
+          </h2>
+          <div class="rounded-full bg-green-100 text-green-600 px-3 py-2">
+            {{ course.discount }}% off
+          </div>
+        </div>
+        <RouterLink
+          to="/"
+          class="block text-center py-2 bg-black text-white font-medium rounded-xl"
+          >Buy Now</RouterLink
+        >
+      </div>
+
+      <div class="max-w-180">
+        <h2 class="mb-4 text-xl md:text-2xl lg:text-3xl font-semibold">
+          What You'll Learn
+        </h2>
+        <p class="text-zinc-600 md:text-lg lg:text-xl mb-8">
+          Master server side development, APIs and cloud infrastructure
+        </p>
+        <div class="px-6 pt-8 rounded-2xl bg-white">
           <div
-            class="px-4 py-2 bg-white text-black capitalize rounded-full tracking-tight"
+            class="overflow-hidden transition-all duration-300 ease-in-out"
+            :class="showFull ? 'max-h-500' : 'max-h-120'"
           >
-            cloud computing
+            <div v-for="syllabus in course.syllabus">
+              <h2 class="mb-2 text-xl md:text-2xl font-semibold">
+                {{ syllabus.title }}
+              </h2>
+              <img :src="syllabus.image" alt="" class="rounded-xl mb-10" />
+            </div>
           </div>
-          <div
-            class="px-4 py-2 bg-white text-black capitalize rounded-full tracking-tight"
+
+          <button
+            @click="toggleShowFull"
+            class="w-full py-6 border-t border-zinc-500"
           >
-            react & node.js
-          </div>
-          <div
-            class="px-4 py-2 bg-white text-black capitalize rounded-full tracking-tight"
-          >
-            full stack development
-          </div>
+            <span v-if="showFull" class="font-medium text-xl md:text-2xl mr-8"
+              >Show Less</span
+            >
+            <span v-else class="font-medium text-xl md:text-2xl mr-8"
+              >Show More</span
+            >
+            <i
+              class="fa-solid fa-angle-down text-2xl transition transform duration-300"
+              :class="{ 'rotate-180': showFull }"
+            ></i>
+          </button>
         </div>
       </div>
     </div>
