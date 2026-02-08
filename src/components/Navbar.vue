@@ -1,19 +1,36 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { watch } from "vue";
-import Login from "./login.vue";
+import Login from "./Login.vue";
+import { account } from "@/lib/appwrite";
+import SignUp from "./SignUp.vue";
 
 const route = useRoute();
 
+onMounted(async () => {
+  try {
+    const user = await account.get();
+    console.log(user);
+  } catch {
+    console.log("Not logged in");
+  }
+});
+
 watch(route, () => {
   login.value = false;
+  signup.value = false;
 });
 
 const isOpen = ref(false);
 const login = ref(false);
+const signup = ref(false);
 const toggleMenu = () => {
   isOpen.value = !isOpen.value;
+};
+
+const signupFunction = () => {
+  signup.value = !signup.value;
 };
 
 const loginFunction = () => {
@@ -54,9 +71,9 @@ const loginFunction = () => {
           />
         </div>
 
-        <div v-if="!login">
+        <div v-if="!login && !signup">
           <button
-            @click="loginFunction"
+            @click="signupFunction"
             class="mr-2 border border-zinc-800 rounded-xl px-6 py-1 tracking-tighter hover:bg-zinc-300 text-center"
           >
             Sign up
@@ -127,7 +144,12 @@ const loginFunction = () => {
       <div class="mt-4 mb-2 border border-zinc-300 w-full"></div>
 
       <button
-        @click="loginFunction"
+        @click="
+          () => {
+            signupFunction();
+            toggleMenu();
+          }
+        "
         class="border border-zinc-800 rounded-xl w-full block py-2 tracking-tighter hover:bg-zinc-300 text-center"
       >
         Sign up
@@ -169,5 +191,6 @@ const loginFunction = () => {
       </RouterLink> -->
     </div>
   </div>
+  <SignUp :signup="signup" @close="signup = false" />
   <Login :login="login" @close="login = false" />
 </template>
