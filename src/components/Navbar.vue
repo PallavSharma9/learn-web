@@ -1,8 +1,23 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRoute } from "vue-router";
+import { watch } from "vue";
+import Login from "./login.vue";
+
+const route = useRoute();
+
+watch(route, () => {
+  login.value = false;
+});
+
 const isOpen = ref(false);
+const login = ref(false);
 const toggleMenu = () => {
   isOpen.value = !isOpen.value;
+};
+
+const loginFunction = () => {
+  login.value = !login.value;
 };
 </script>
 <template>
@@ -10,7 +25,7 @@ const toggleMenu = () => {
     <div
       class="p-4 bg-white flex justify-between h-16 items-center lg:px-24 border border-zinc-300"
     >
-      <div class="flex justify-start items-center">
+      <div class="z-300 flex justify-start items-center">
         <RouterLink to="/">
           <img class="w-32 lg:mr-8" src="../images/logo.png" alt="" />
         </RouterLink>
@@ -39,17 +54,34 @@ const toggleMenu = () => {
           />
         </div>
 
-        <div
+        <div v-if="!login">
+          <button
+            @click="loginFunction"
+            class="mr-2 border border-zinc-800 rounded-xl px-6 py-1 tracking-tighter hover:bg-zinc-300 text-center"
+          >
+            Sign up
+          </button>
+
+          <button
+            @click="loginFunction"
+            class="border border-black rounded-xl px-6 py-1 tracking-tighter bg-black text-white hover:bg-zinc-700 text-center"
+          >
+            Log in
+          </button>
+        </div>
+
+        <!-- <div
+          v-else
           class="rounded-full p-2 border-2 border-zinc-600 duration-200 hover:scale-105"
         >
           <i class="fa-solid fa-user"></i>
-        </div>
+        </div> -->
       </div>
 
       <!-- Mobile view  -->
       <div
         :class="[isOpen ? 'fixed right-4' : '']"
-        class="right-4 z-50 text-2xl lg:hidden cursor-pointer"
+        class="right-4 z-300 text-2xl lg:hidden cursor-pointer"
         @click="toggleMenu"
       >
         <i v-if="!isOpen" class="fa-solid fa-bars"></i>
@@ -59,7 +91,7 @@ const toggleMenu = () => {
 
     <div
       v-if="isOpen"
-      class="fixed inset-0 flex mt-10 lg:hidden flex-col justify-center items-center bg-white/95 space-y-4 px-4"
+      class="fixed inset-0 z-200 flex mt-10 lg:hidden flex-col justify-center items-center bg-white space-y-4 px-4"
     >
       <!-- Search Area  -->
       <div
@@ -74,16 +106,19 @@ const toggleMenu = () => {
       </div>
 
       <RouterLink
+        @click="toggleMenu"
         to="/"
         class="p-2 bg-zinc-100 w-full rounded-lg hover:text-lg hover:text-orange-700 duration-300"
         >Home</RouterLink
       >
       <RouterLink
+        @click="toggleMenu"
         to="/courses"
         class="p-2 bg-zinc-100 w-full rounded-lg hover:text-lg hover:text-orange-700 duration-300"
         >Courses</RouterLink
       >
       <RouterLink
+        @click="toggleMenu"
         to="/store"
         class="p-2 bg-zinc-100 w-full rounded-lg hover:text-lg hover:text-orange-700 duration-300"
         >Store</RouterLink
@@ -91,7 +126,26 @@ const toggleMenu = () => {
 
       <div class="mt-4 mb-2 border border-zinc-300 w-full"></div>
 
-      <RouterLink
+      <button
+        @click="loginFunction"
+        class="border border-zinc-800 rounded-xl w-full block py-2 tracking-tighter hover:bg-zinc-300 text-center"
+      >
+        Sign up
+      </button>
+
+      <button
+        @click="
+          () => {
+            loginFunction();
+            toggleMenu();
+          }
+        "
+        class="border border-black rounded-xl w-full block py-2 tracking-tighter bg-black text-white hover:bg-zinc-700 text-center"
+      >
+        Log in
+      </button>
+
+      <!-- <RouterLink
         to="/store"
         class="p-2 bg-zinc-100 w-full rounded-lg flex items-center gap-2 hover:gap-4 transition-all duration-300"
       >
@@ -112,7 +166,8 @@ const toggleMenu = () => {
       >
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
         <span>Logout</span>
-      </RouterLink>
+      </RouterLink> -->
     </div>
   </div>
+  <Login :login="login" @close="login = false" />
 </template>
