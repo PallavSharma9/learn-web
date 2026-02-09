@@ -22,7 +22,7 @@ onMounted(() => {
       <!-- course card  -->
       <div
         v-for="course in courseStore.courses"
-        :key="course.id"
+        :key="course.$id"
         class="container p-4 bg-white rounded-2xl max-w-100"
       >
         <img class="rounded-xl" :src="getImageUrl(course.thumbnailId)" alt="" />
