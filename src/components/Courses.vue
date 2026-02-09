@@ -1,5 +1,14 @@
 <script lang="ts" setup>
 import { courses } from "@/data/courses";
+import { useCourseStore } from "@/stores/courseStore";
+import { getImageUrl } from "@/services/imageServices";
+import { onMounted } from "vue";
+
+const courseStore = useCourseStore();
+
+onMounted(() => {
+  courseStore.fetchCourses();
+});
 </script>
 
 <template>
@@ -12,16 +21,16 @@ import { courses } from "@/data/courses";
     <div class="flex flex-column md:flex-row justify-center gap-4 flex-wrap">
       <!-- course card  -->
       <div
-        v-for="course in courses"
+        v-for="course in courseStore.courses"
         :key="course.id"
         class="container p-4 bg-white rounded-2xl max-w-100"
       >
-        <img class="rounded-xl" :src="course.picture" alt="" />
+        <img class="rounded-xl" :src="getImageUrl(course.thumbnailId)" alt="" />
         <h3 class="mt-4 mb-8 text-2xl font-medium">
           {{ course.title }}
         </h3>
         <p class="text-zinc-600 mb-6">
-          {{ course.heroDescription }}
+          {{ course.description }}
         </p>
         <div class="flex justify-between mb-10">
           <h2 class="text-3xl font-bold">
