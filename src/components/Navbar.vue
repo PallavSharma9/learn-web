@@ -8,15 +8,6 @@ import SignUp from "./SignUp.vue";
 
 const route = useRoute();
 
-onMounted(async () => {
-  try {
-    const user = await account.get();
-    console.log(user);
-  } catch {
-    console.log("Not logged in");
-  }
-});
-
 watch(route, () => {
   login.value = false;
   signup.value = false;

@@ -1,8 +1,12 @@
 <script lang="ts" setup>
 import { useRoute } from "vue-router";
-import { watch } from "vue";
+import { watch, ref } from "vue";
+import { useAuthStore } from "@/stores/authStore";
 
+const auth = useAuthStore();
 const route = useRoute();
+
+
 
 const { login } = defineProps({
   login: Boolean,
