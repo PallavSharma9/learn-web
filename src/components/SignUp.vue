@@ -75,7 +75,7 @@ if (trimmedPassword.length < 6) {
       err?.response?.message ||
       err?.message ||
       "Signup failed. Please try again.";
-      
+
   } finally {
     loading.value = false;
   }
@@ -86,8 +86,8 @@ if (trimmedPassword.length < 6) {
 <template>
   <!-- Mobile view  -->
   <div v-if="signup" class="lg:hidden fixed inset-0 h-screen z-999">
-    <div class="h-1/2 bg-black/70" @click="closeSignup"></div>
-    <div class="h-1/2 bg-white px-4 rounded-t-2xl">
+    <div class="h-1/3 bg-black/70" @click="closeSignup"></div>
+    <div class="h-2/3 bg-white px-4 rounded-t-2xl">
       <div class="w-12 h-1 mx-auto bg-zinc-400"></div>
       <RouterLink to="/" @click="closeSignup">
         <img class="w-32 mx-auto my-6" src="../images/logo.png" alt="" />

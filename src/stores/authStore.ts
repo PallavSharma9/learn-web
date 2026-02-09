@@ -3,8 +3,9 @@ import * as authService from "@/services/authServices";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    user: null as any,
+    user: null as null | Record<string, any>,
     loading: true,
+    loggingOut: false,
   }),
 
   actions: {
@@ -30,6 +31,18 @@ export const useAuthStore = defineStore("auth", {
     },
 
     async logout() {
+      if (this.loggingOut) return;
+
+      try {
+        this.loggingOut = true;
+
+        await authService.logout();
+
+        this.user = null;
+      } finally {
+        this.loggingOut = false;
+      }
+
       await authService.logout();
 
       this.user = null;

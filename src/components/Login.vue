@@ -6,7 +6,10 @@ import { useAuthStore } from "@/stores/authStore";
 const auth = useAuthStore();
 const route = useRoute();
 
-
+const email = ref("");
+const password = ref("");
+const loading = ref(false);
+const error = ref('');
 
 const { login } = defineProps({
   login: Boolean,
@@ -21,6 +24,50 @@ watch(route, () => {
 const closeLogin = () => {
   emit("close");
 };
+
+const resetForm = () => {
+  email.value = "";
+  password.value = "";
+};
+
+const handleLogin = async () => {
+
+  //Prevent spam clicking
+  if(loading.value) return;
+
+  error.value = "";
+
+  const trimmedEmail = email.value.trim();
+  const trimmedPassword = password.value.trim();
+
+  //validation
+  if(!trimmedEmail || !trimmedPassword) {
+    error.value = "Please fill all the fields";
+    return;
+  }
+
+  try {
+
+    loading.value = true;
+
+    await auth.login(trimmedEmail, trimmedPassword);
+
+    resetForm();
+    emit('close');
+
+  } catch (err: any) {
+
+    error.value =
+  err?.response?.message ||
+  err?.message ||
+  "Login failed. Please try again.";
+
+
+  } finally {
+    loading.value = false;
+
+  }
+};
 </script>
 <template>
   <!-- Mobile view  -->
@@ -34,18 +81,28 @@ const closeLogin = () => {
       <h3 class="text-xl font-semibold mb-4">Sign in to your account</h3>
       <label class="text-zinc-700 mb-2">Email or Phone</label>
       <input
-        type="text"
-        placeholder="Enter your phone number or email"
+        v-model="email"
+        placeholder="Enter your email"
+        class="block outline-blue-300 w-full py-2 px-3 rounded-xl border border-zinc-400 text-lg text-zinc-600 mb-2"
+      />
+
+      <input
+        v-model="password"
+        type="password"
+        placeholder="Enter password"
         class="block outline-blue-300 w-full py-2 px-3 rounded-xl border border-zinc-400 text-lg text-zinc-600 mb-4"
       />
       <p class="text-xs tracking-tighter text-zinc-600">
         Please add country code if you are a user outside of India
       </p>
       <button
+        :disabled="loading"
+        @click="handleLogin"
         class="border border-black rounded-xl w-full block py-1 my-6 tracking-tighter bg-black text-white hover:bg-zinc-700 text-center"
       >
-        Continue
+        {{loading ? "Signing in...": "Continue"}}
       </button>
+      <p v-if="error" class="text-red-500 text-sm mt-2">{{ error }}</p>
       <div class="w-full h-0.5 mx-auto bg-zinc-400"></div>
     </div>
   </div>
@@ -110,16 +167,28 @@ const closeLogin = () => {
       </h3>
 
       <input
+        v-model="email"
         placeholder="Enter phone or email"
         class="w-full border rounded-xl px-4 py-3 mb-4"
       />
 
+      <input
+         v-model="password"
+          type="password"
+          placeholder="Enter password"
+          class="w-full border rounded-xl px-4 py-3 mb-4"
+      />
+
       <button
+        :disabled="loading"
+        @click="handleLogin"
         class="w-full bg-blue-900 text-white py-3 rounded-xl"
       >
-        Continue
+        {{loading ? "Signing in..." : "Continue"}}
       </button>
-
+      <p v-if="error" class="text-red-500 text-sm mt-2">
+        {{ error }}
+      </p>
     </div>
   </div>
 </div>

@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { watch } from "vue";
 import Login from "./Login.vue";
-import { account } from "@/lib/appwrite";
 import SignUp from "./SignUp.vue";
+import { useAuthStore } from "@/stores/authStore";
+
+const auth = useAuthStore();
 
 const route = useRoute();
 
@@ -26,6 +28,15 @@ const signupFunction = () => {
 
 const loginFunction = () => {
   login.value = !login.value;
+};
+
+const handleLogout = async () => {
+  await auth.logout();
+};
+
+const mobileLogout = async () => {
+  await handleLogout();
+  toggleMenu();
 };
 </script>
 <template>
@@ -62,7 +73,7 @@ const loginFunction = () => {
           />
         </div>
 
-        <div v-if="!login && !signup">
+        <div v-if="!auth.user">
           <button
             @click="signupFunction"
             class="mr-2 border border-zinc-800 rounded-xl px-6 py-1 tracking-tighter hover:bg-zinc-300 text-center"
@@ -75,6 +86,16 @@ const loginFunction = () => {
             class="border border-black rounded-xl px-6 py-1 tracking-tighter bg-black text-white hover:bg-zinc-700 text-center"
           >
             Log in
+          </button>
+        </div>
+
+        <div v-else>
+          <button
+            :disabled="auth.loggingOut"
+            @click="handleLogout"
+            class="border border-black rounded-xl px-6 py-1 tracking-tighter bg-black text-white hover:bg-zinc-700 text-center"
+          >
+            {{ auth.loggingOut ? "Logging out..." : "Logout" }}
           </button>
         </div>
 
@@ -134,29 +155,41 @@ const loginFunction = () => {
 
       <div class="mt-4 mb-2 border border-zinc-300 w-full"></div>
 
-      <button
-        @click="
-          () => {
-            signupFunction();
-            toggleMenu();
-          }
-        "
-        class="border border-zinc-800 rounded-xl w-full block py-2 tracking-tighter hover:bg-zinc-300 text-center"
-      >
-        Sign up
-      </button>
+      <div v-if="!auth.user" class="w-full">
+        <button
+          @click="
+            () => {
+              signupFunction();
+              toggleMenu();
+            }
+          "
+          class="border border-zinc-800 rounded-xl w-full block py-2 tracking-tighter hover:bg-zinc-300 text-center mb-4"
+        >
+          Sign up
+        </button>
 
-      <button
-        @click="
-          () => {
-            loginFunction();
-            toggleMenu();
-          }
-        "
-        class="border border-black rounded-xl w-full block py-2 tracking-tighter bg-black text-white hover:bg-zinc-700 text-center"
-      >
-        Log in
-      </button>
+        <button
+          @click="
+            () => {
+              loginFunction();
+              toggleMenu();
+            }
+          "
+          class="border border-black rounded-xl w-full block py-2 tracking-tighter bg-black text-white hover:bg-zinc-700 text-center"
+        >
+          Log in
+        </button>
+      </div>
+
+      <div v-else class="w-full">
+        <button
+          :disabled="auth.loggingOut"
+          @click="mobileLogout"
+          class="border border-zinc-800 rounded-xl w-full block py-2 tracking-tighter hover:bg-zinc-300 text-center"
+        >
+          {{ auth.loggingOut ? "Logging out..." : "Logout" }}
+        </button>
+      </div>
 
       <!-- <RouterLink
         to="/store"
