@@ -17,7 +17,7 @@ onMounted(async () => {
     Loading...
   </div>
 
-  <div v-else>
+  <div v-else class="mx-auto">
     <Navbar />
     <RouterView />
     <Footer />
