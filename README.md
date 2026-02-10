@@ -1,42 +1,126 @@
-# .
+# 🚀 Learn-Web — Modern Course Platform
 
-This template should help get you started developing with Vue 3 in Vite.
+Learn-Web is a full-stack course platform built with **Vue 3, TypeScript, Pinia, and Appwrite** that allows users to browse courses, authenticate securely, and access structured learning content.
 
-## Recommended IDE Setup
+👉 **Live Demo:**  
+https://learn-web-es5r-91zuagkkt-pallavsharma9s-projects.vercel.app/
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Recommended Browser Setup
+## ✨ Features
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+✅ Secure Authentication (Signup / Login / Logout)  
+✅ Cloud Backend powered by Appwrite  
+✅ Dynamic Course Pages  
+✅ Structured Syllabus System  
+✅ Image Storage via Appwrite Buckets  
+✅ Protected Content Architecture (ready for purchase gating)  
+✅ Responsive UI (Mobile + Desktop)  
+✅ Centralized State Management with Pinia  
+✅ Production Deployment on Vercel  
 
-## Type Support for `.vue` Imports in TS
+---
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
 
-## Customize configuration
+This project follows a **frontend-first architecture** using Appwrite as a Backend-as-a-Service.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+---
 
-## Project Setup
+## 🛠 Tech Stack
 
-```sh
+### Frontend
+- Vue 3
+- TypeScript
+- Pinia
+- Vue Router
+- Tailwind CSS
+
+### Backend (BaaS)
+- Appwrite Authentication
+- Appwrite Database
+- Appwrite Storage
+
+### Deployment
+- Vercel
+
+---
+
+## 🔐 Authentication Flow
+
+- Users create an account via Appwrite.
+- Secure sessions are maintained using cookies.
+- Protected features can be gated based on authentication.
+
+---
+
+## 📚 Database Design
+
+### Courses Collection
+- title  
+- description  
+- price  
+- discount  
+- thumbnailId  
+- instructor  
+
+### Syllabus Collection
+- courseId (relation)
+- title  
+- imageId  
+- order  
+
+This relational structure allows scalable course expansion.
+
+---
+
+## 🚀 Getting Started (Local Setup)
+
+### 1️⃣ Clone the repo
+
+git clone https://github.com/PallavSharma9/learn-web.git
+
+### 2️⃣ Install dependencies
+
 npm install
-```
 
-### Compile and Hot-Reload for Development
+### 3️⃣ Create .env
+VITE_APPWRITE_ENDPOINT=
+VITE_APPWRITE_PROJECT_ID=
+VITE_DB_ID=
+VITE_COURSE_TABLE_ID=
+VITE_SYLLABUS_TABLE_ID=
+VITE_STORAGE_BUCKET_ID=
 
-```sh
+### 4️⃣ Run locally
+
 npm run dev
-```
 
-### Type-Check, Compile and Minify for Production
+## 🌍 Deployment
 
-```sh
-npm run build
-```
+### The app is deployed on Vercel with environment variables configured for Appwrite.
+
+🔥 Future Improvements
+
+Payment Integration (Stripe/Razorpay)
+
+Course Purchase System
+
+Video Streaming Access Control
+
+Admin Dashboard
+
+Role-based Authorization
+
+Email Notifications
+
+Course Progress Tracking
+
+## 👨‍💻 Author
+
+## Pallav Sharma
+
+
+
+
+
+
