@@ -8,3 +8,9 @@ export const getCourses = async () => {
 
   return res.documents;
 };
+
+export const getCourseById = async (id: string) => {
+  const res = await databases.getDocument(DATABASE_ID, TABLE_ID, id);
+
+  return res;
+};

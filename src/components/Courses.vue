@@ -41,7 +41,7 @@ onMounted(() => {
           </div>
         </div>
         <RouterLink
-          :to="`/courses/${course.id}`"
+          :to="`/courses/${course.$id}`"
           class="block text-center py-2 bg-black text-white font-medium rounded-xl"
           >View Details</RouterLink
         >

@@ -1,31 +1,65 @@
 <script setup lang="ts">
 import type { Course } from "@/types/course";
 import { useRoute } from "vue-router";
-import { computed } from "vue";
+import { ref, onMounted } from "vue";
 import { courses } from "@/data/courses";
-import { ref } from "vue";
+import { getCourseById } from "@/services/courseService";
+import { getImageUrl } from "@/services/imageServices";
+import { getSyllabusByCourse } from "@/services/syllabusService";
 
 const route = useRoute();
 
-const course = computed<Course | undefined>(() =>
-  courses.find((c) => c.id === Number(route.params.id)),
-);
-console.log(course.value?.title);
+const course = ref<any>(null);
+const syllabus = ref<any[]>([]);
+const loading = ref(true);
+
+const tags = [
+  "Web3 Fundamentals",
+  "Cloud Computing",
+  "React & Node.js",
+  "Full Stack Development",
+];
+
 const showFull = ref(false);
 
 function toggleShowFull(): void {
   showFull.value = !showFull.value;
 }
+
+onMounted(async () => {
+  try {
+    const courseId = route.params.id as string;
+
+    const courseData = await getCourseById(courseId);
+    const syllabusData = await getSyllabusByCourse(courseId);
+
+    course.value = courseData;
+    syllabus.value = syllabusData;
+  } catch (err) {
+    console.error("Failed to fetch course", err);
+  } finally {
+    loading.value = false;
+  }
+});
+
+// const course = computed<Course | undefined>(() =>
+//   courses.find((c) => c.id === Number(route.params.id)),
+// );
+// console.log(course.value?.title);
 </script>
 
 <template>
-  <section v-if="course">
+  <section v-if="!loading && course">
     <div
       class="px-6 py-10 lg:px-24 bg-pink-100 flex flex-col lg:flex-row-reverse gap-12 lg:gap-24"
     >
       <div class="container flex flex-col gap-2 bg-black rounded-2xl lg:w-1/3">
-        <img class="rounded-t-2xl" :src="course.picture" alt="" />
-        <div class="flex items-center gap-2 pl-4 pb-2">
+        <img
+          class="rounded-t-2xl"
+          :src="getImageUrl(course.thumbnailId)"
+          alt=""
+        />
+        <!-- <div class="flex items-center gap-2 pl-4 pb-2">
           <img
             class="w-12 h-12 rounded-full border-2 border-white"
             :src="course.instructor.avatar"
@@ -39,7 +73,7 @@ function toggleShowFull(): void {
               course.instructor.avatar
             }}</span>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="flex flex-col gap-4 lg:gap-8 lg:w-1/2">
@@ -47,11 +81,13 @@ function toggleShowFull(): void {
           {{ course.title }}
         </h2>
         <p class="text-black/80 md:text-lg lg:text-xl">
-          {{ course.description }}
+          Master real-world engineering skills from zero to production. Build
+          scalable web apps, deploy on cloud infrastructure, and create
+          blockchain applications with hands-on mentorship.
         </p>
         <div class="flex flex-wrap gap-2 font-medium">
           <div
-            v-for="tag in course.tags"
+            v-for="tag in tags"
             class="px-4 py-2 bg-white text-black capitalize rounded-full tracking-tight"
           >
             {{ tag }}
@@ -64,7 +100,11 @@ function toggleShowFull(): void {
       class="lg:relative flex flex-col lg:flex-row-reverse justify-center items-center lg:items-start gap-10 lg:gap-20 bg-zinc-100 px-4 lg:px-30 py-12"
     >
       <div class="lg:sticky lg:top-10 container p-4 bg-white rounded-2xl">
-        <img class="rounded-xl mx-auto max-h-70" :src="course.picture" alt="" />
+        <img
+          class="rounded-xl mx-auto max-h-70"
+          :src="getImageUrl(course.thumbnailId)"
+          alt=""
+        />
         <h3 class="my-4 text-2xl font-medium">
           {{ course.title }}
         </h3>
@@ -95,11 +135,15 @@ function toggleShowFull(): void {
             class="overflow-hidden transition-all duration-300 ease-in-out"
             :class="showFull ? 'max-h-500' : 'max-h-120'"
           >
-            <div v-for="syllabus in course.syllabus">
+            <div v-for="item in syllabus">
               <h2 class="mb-2 text-xl md:text-2xl font-semibold">
-                {{ syllabus.title }}
+                {{ item.title }}
               </h2>
-              <img :src="syllabus.image" alt="" class="rounded-xl mb-10" />
+              <img
+                :src="getImageUrl(item.imageId)"
+                alt=""
+                class="rounded-xl mb-10"
+              />
             </div>
           </div>
 
