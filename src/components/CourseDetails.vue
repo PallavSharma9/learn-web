@@ -117,7 +117,7 @@ onMounted(async () => {
           </div>
         </div>
         <RouterLink
-          to="/"
+          :to="`/courses/${course.$id}/checkout`"
           class="block text-center py-2 bg-black text-white font-medium rounded-xl"
           >Buy Now</RouterLink
         >

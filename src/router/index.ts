@@ -3,6 +3,7 @@ import HomeView from "@/views/HomeView.vue";
 import CoursesView from "@/views/CoursesView.vue";
 import CourseDetailsView from "@/views/CourseDetailsView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
+import CheckoutView from "@/views/CheckoutView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
       path: "/courses/:id",
       name: "course",
       component: CourseDetailsView,
+      props: true,
+    },
+    {
+      path: "/courses/:id/checkout",
+      component: CheckoutView,
       props: true,
     },
     {
